@@ -1,0 +1,84 @@
+/* 전체 배경과 기본 글꼴 설정 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 폼 스타일 */
+form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    width: 320px;
+    text-align: left;
+}
+
+/* 입력 필드 스타일 */
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* 버튼 스타일 */
+input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* 라벨 스타일 및 간격 설정 */
+form label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    display: block;
+}
+
+/* 회원가입 링크 스타일 */
+.signup-link {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.signup-link span {
+    margin-right: 10px;
+}
+
+.signup-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
