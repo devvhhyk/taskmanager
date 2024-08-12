@@ -4,6 +4,9 @@ import com.example.project.dto.BoardDTO;
 import com.example.project.service.BoardService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +22,22 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    // 게시글 페이지 & 게시글 목록
+    // 게시글 목록
     @GetMapping("/board")
-    public String findAll(HttpSession session, Model model) {
-        if(session.getAttribute("loginId") == null) {
+    public String findAll(@PageableDefault(page = 1) Pageable pageable, HttpSession session, Model model) {
+        if (session.getAttribute("loginId") == null) {
             return "redirect:/member/login";
         }
 
-        List<BoardDTO> boardDTOList = boardService.findAll();
-        model.addAttribute("boardList", boardDTOList);
+        Page<BoardDTO> boardList = boardService.paging(pageable);
+
+        int blockLimit = 3;
+        int startPage = (((int)(Math.ceil((double)pageable.getPageNumber() / blockLimit))) - 1) * blockLimit + 1; // 1 4 7 10 ~~
+        int endPage = ((startPage + blockLimit - 1) < boardList.getTotalPages()) ? startPage + blockLimit - 1 : boardList.getTotalPages();
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
         return "board";
     }
 
