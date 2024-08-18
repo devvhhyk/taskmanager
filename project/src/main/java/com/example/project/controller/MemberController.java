@@ -51,11 +51,11 @@ public class MemberController {
         }
     }
 
-    // 로그아웃폼
-    @GetMapping("member/logout")
-    public String logoutForm(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
+    // 로그아웃
+    @GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 무효화
+        return "redirect:/member/login";
     }
 
     // 마이페이지

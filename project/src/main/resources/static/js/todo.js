@@ -7,6 +7,7 @@ $(document).ready(function() {
     });
 });
 
+// 할일추가
 function todoSave() {
     const todoTask = $('#todoInput').val();
 
@@ -29,6 +30,7 @@ function todoSave() {
     });
 }
 
+// 할일 목록
 function loadTodos() {
     $.get('/todo/list', function(todos) {
         const todoList = $('#todoList');
@@ -37,13 +39,16 @@ function loadTodos() {
         todos.forEach(function(todo) {
             const todoItem = $('<li class="' + (todo.todoCompleted ? 'completed' : '') + '">' +
                 '<span onclick="toggleComplete(' + todo.id + ', ' + todo.todoCompleted + ')">' + todo.todoTask + '</span>' +
-                '<button onclick="deleteTodo(' + todo.id + ')">삭제</button>' +
-                '<button onclick="editTodo(' + todo.id + ', \'' + todo.todoTask + '\')" ' + (todo.todoCompleted ? 'disabled' : '') + '>수정</button></li>');
+                '<div class="button-group">' +
+                '<button class="edit-btn" onclick="editTodo(' + todo.id + ', \'' + todo.todoTask + '\')" ' + (todo.todoCompleted ? 'disabled' : '') + '>수정</button>' +
+                '<button class="delete-btn" onclick="deleteTodo(' + todo.id + ')">삭제</button>' +
+                '</div></li>');
             todoList.append(todoItem);
         });
     });
 }
 
+// 할일 완료
 function toggleComplete(id, currentStatus) {
     const newStatus = !currentStatus;
     $.ajax({
@@ -52,12 +57,7 @@ function toggleComplete(id, currentStatus) {
         contentType: 'application/json',
         data: JSON.stringify({ id: id, todoCompleted: newStatus }),
         success: function(response) {
-            const todoItem = $('#todoList').find('li').filter(function() {
-                return $(this).find('span').attr('onclick') === `toggleComplete(${id}, ${currentStatus})`;
-            });
-            todoItem.toggleClass('completed', newStatus);
-            todoItem.find('button').eq(1).prop('disabled', newStatus);
-            todoItem.find('span').attr('onclick', `toggleComplete(${id}, ${newStatus})`);
+            loadTodos();
         },
         error: function(xhr, status, error) {
             alert("Error: " + error);
@@ -65,6 +65,7 @@ function toggleComplete(id, currentStatus) {
     });
 }
 
+// 할일 삭제
 function deleteTodo(id) {
     $.ajax({
         url: '/todo/delete',
@@ -80,17 +81,24 @@ function deleteTodo(id) {
     });
 }
 
+// 할일 수정
 function editTodo(id, task) {
     const newTask = prompt("할 일을 수정하세요:", task);
     if (newTask === null || newTask.trim() === "") {
         return;
     }
 
+    const todoItem = $('#todoList').find('li').filter(function() {
+        return $(this).find('span').attr('onclick').includes(`toggleComplete(${id}`);
+    });
+
+    const todoCompleted = todoItem.hasClass('completed');
+
     $.ajax({
         url: '/todo/update',
         method: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ id: id, todoTask: newTask, todoCompleted: false }),
+        data: JSON.stringify({ id: id, todoTask: newTask, todoCompleted: todoCompleted }),
         success: function(response) {
             loadTodos();
         },

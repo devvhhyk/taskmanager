@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -29,6 +30,7 @@ public class BoardController {
             return "redirect:/member/login";
         }
 
+        // 게시글 목록 페이징 처리
         Page<BoardDTO> boardList = boardService.paging(pageable);
 
         int blockLimit = 3;
@@ -38,35 +40,44 @@ public class BoardController {
         model.addAttribute("boardList", boardList);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
+        model.addAttribute("loginId", session.getAttribute("loginId"));
         return "board";
     }
 
     // 게시글 저장
     @GetMapping("/board/save")
-    public String saveForm() {
+    public String saveForm(HttpSession session, Model model) {
+        model.addAttribute("loginId", session.getAttribute("loginId"));
         return "boardSave";
     }
 
     @PostMapping("/board/save")
-    public String save(@ModelAttribute BoardDTO boardDTO) {
-        System.out.println("boardDTO = " + boardDTO);
-        boardService.save(boardDTO);
+    public String save(@ModelAttribute BoardDTO boardDTO, HttpSession session) throws IOException {
+        String memberId = (String) session.getAttribute("loginId");
+        boardService.save(boardDTO, memberId);
         return "redirect:/board";
     }
 
     // 게시글 상세
     @GetMapping("/board/{id}")
-    public String findById(@PathVariable("id") Long id, Model model) {
+    public String findById(@PathVariable("id") Long id, Model model, HttpSession session,
+                           @PageableDefault(page = 1) Pageable pageable) {
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
+        model.addAttribute("page", pageable.getPageNumber());
+        model.addAttribute("loginId", session.getAttribute("loginId"));
         return "boardDetail";
     }
 
     // 게시글 수정
     @GetMapping("/board/update/{id}")
-    public String updateForm(@PathVariable("id") Long id, Model model) {
+    public String updateForm(@PathVariable("id") Long id, Model model, HttpSession session) {
         BoardDTO boardDTO = boardService.findById(id);
+        String loginId = (String) session.getAttribute("loginId");
+        if (!boardDTO.getMemberId().equals(loginId)) {
+            return "redirect:/board";
+        }
         model.addAttribute("boardUpdate", boardDTO);
         return "boardUpdate";
     }
@@ -80,8 +91,12 @@ public class BoardController {
 
     // 게시글 삭제
     @GetMapping("board/delete/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        boardService.delete(id);
+    public String delete(@PathVariable("id") Long id, HttpSession session) {
+        BoardDTO boardDTO = boardService.findById(id);
+        String loginId = (String) session.getAttribute("loginId");
+        if (boardDTO.getMemberId().equals(loginId)) {
+            boardService.delete(id);
+        }
         return "redirect:/board";
     }
 }

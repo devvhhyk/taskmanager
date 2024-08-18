@@ -20,11 +20,16 @@ public class TodoEntity {
     @Column(nullable = false)
     private Boolean todoCompleted;
 
-    public static TodoEntity toTodoEntity(TodoDTO todoDTO) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private MemberEntity memberEntity;
+
+    public static TodoEntity toTodoEntity(TodoDTO todoDTO, MemberEntity memberEntity) {
         TodoEntity todoEntity = new TodoEntity();
         todoEntity.setId(todoDTO.getId());
         todoEntity.setTodoTask(todoDTO.getTodoTask());
         todoEntity.setTodoCompleted(todoDTO.isTodoCompleted());
+        todoEntity.setMemberEntity(memberEntity);
         return todoEntity;
     }
 }

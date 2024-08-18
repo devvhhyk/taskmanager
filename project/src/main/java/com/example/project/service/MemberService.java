@@ -36,4 +36,9 @@ public class MemberService {
     public boolean isMemberEmailAvailable(String memberEmail) {
         return !memberRepository.existsByMemberEmail(memberEmail);
     }
+
+    public MemberEntity findByMemberId(String memberId) {
+        return memberRepository.findByMemberId(memberId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
