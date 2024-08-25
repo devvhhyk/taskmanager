@@ -52,7 +52,7 @@ tbody tr:hover {
 
 a {
     color: #3b5998;
-    text-decoration: none; /* 밑줄 없애기 */
+    text-decoration: none;
     font-weight: 600;
 }
 
@@ -75,13 +75,13 @@ a:hover {
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
-    text-decoration: none; /* 밑줄 없애기 */
+    text-decoration: none;
     transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
 }
 
 .button:hover {
     background-color: #2d4373;
-    color: white; /* 호버 시 텍스트 색상을 흰색으로 유지 */
+    color: white;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -93,14 +93,14 @@ a:hover {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    gap: 5px; /* 페이지 번호 간격 조정 */
+    gap: 5px;
 }
 
 .pagination-container a, .pagination-container span {
     font-size: 14px;
     color: #3b5998;
-    text-decoration: none; /* 밑줄 없애기 */
-    padding: 0; /* 패딩 제거 */
+    text-decoration: none;
+    padding: 0;
     margin: 0 5px;
 }
 

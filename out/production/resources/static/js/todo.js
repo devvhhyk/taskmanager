@@ -36,14 +36,16 @@ function loadTodos() {
         const todoList = $('#todoList');
         todoList.empty();
 
-        todos.forEach(function(todo) {
+         todos.sort((a, b) => b.id - a.id);
+
+        todos.reverse().forEach(function(todo) {
             const todoItem = $('<li class="' + (todo.todoCompleted ? 'completed' : '') + '">' +
                 '<span onclick="toggleComplete(' + todo.id + ', ' + todo.todoCompleted + ')">' + todo.todoTask + '</span>' +
                 '<div class="button-group">' +
                 '<button class="edit-btn" onclick="editTodo(' + todo.id + ', \'' + todo.todoTask + '\')" ' + (todo.todoCompleted ? 'disabled' : '') + '>수정</button>' +
                 '<button class="delete-btn" onclick="deleteTodo(' + todo.id + ')">삭제</button>' +
                 '</div></li>');
-            todoList.append(todoItem);
+            todoList.prepend(todoItem);
         });
     });
 }

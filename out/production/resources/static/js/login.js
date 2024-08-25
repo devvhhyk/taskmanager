@@ -4,9 +4,9 @@ document.getElementById('loginForm').addEventListener('submit', function(event) 
 
     if (memberId === '') {
         alert('아이디를 입력하세요');
-        event.preventDefault(); // 폼 제출을 막음
+        event.preventDefault();
     } else if (memberPassword === '') {
         alert('비밀번호를 입력하세요');
-        event.preventDefault(); // 폼 제출을 막음
+        event.preventDefault();
     }
 });

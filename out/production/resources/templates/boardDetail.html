@@ -43,8 +43,8 @@
         <button onclick="deleteBoard()" class="button delete-button" th:if="${board.memberId == loginId}">삭제</button>
     </div>
     <div id="comment-write">
-        <input type="text" id="commentWriter" placeholder="작성자" th:value="${loginId}" readonly>
-        <input type="text" id="commentContents" placeholder="내용">
+        <input type="text" id="commentWriter" class="writer-input" placeholder="작성자" th:value="${loginId}" readonly>
+        <input type="text" id="commentContents" class="content-input" placeholder="내용">
         <button id="comment-write-btn" onclick="commentWrite()">댓글작성</button>
     </div>
     <div id="comment-list">

@@ -93,16 +93,17 @@ body {
     align-items: center;
     margin-bottom: 20px;
     gap: 10px;
+    margin-top: 20px;
 }
 
 #comment-write input[type="text"].writer-input,
 #comment-write input[type="text"].content-input {
-    padding: 10px;
+    padding: 12px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px;
     transition: border-color 0.3s;
-    height: 50px; /* 동일한 높이 설정 */
+    height: 50px;
 }
 
 #comment-write input[type="text"].writer-input:focus,
@@ -112,27 +113,30 @@ body {
 }
 
 #comment-write .writer-input {
-    width: 150px;
+    width: 120px; /* 작성자 필드 너비 조정 */
+    flex-shrink: 0;
 }
 
 #comment-write .content-input {
-    flex-grow: 1;
+    flex-grow: 2; /* 내용 필드가 더 넓어지도록 설정 */
 }
 
 #comment-write button {
-    padding: 10px 20px;
+    padding: 12px 24px;
     background-color: #3b5998;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: background-color 0.3s, box-shadow 0.3s;
+    height: 50px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 #comment-write button:hover {
     background-color: #2d4373;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 #comment-list {

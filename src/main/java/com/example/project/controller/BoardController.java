@@ -89,9 +89,10 @@ public class BoardController {
     }
 
     @PostMapping("board/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+    public String update(@ModelAttribute BoardDTO boardDTO, Model model, HttpSession session) {
         BoardDTO board = boardService.update(boardDTO);
         model.addAttribute("board", board);
+        model.addAttribute("loginId", session.getAttribute("loginId"));
         return "boardDetail";
     }
 

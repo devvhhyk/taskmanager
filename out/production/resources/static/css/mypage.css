@@ -45,7 +45,7 @@ h2 {
 .actions {
     display: flex;
     justify-content: space-between;
-    gap: 10px; /* 버튼 사이에 공백 추가 */
+    gap: 10px;
 }
 
 .button {
@@ -62,11 +62,11 @@ h2 {
 }
 
 .home-button {
-    background-color: #3b5998; /* 홈 버튼 색상 */
+    background-color: #3b5998;
 }
 
 .logout-button {
-    background-color: #dc3545; /* 로그아웃 버튼 색상 */
+    background-color: #dc3545;
 }
 
 .button:hover {
